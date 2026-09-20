@@ -5,7 +5,11 @@ import java.time.Instant;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "papers")
+@Table(name = "papers", indexes = {
+    @Index(name = "idx_paper_owner", columnList = "user_id"),
+    @Index(name = "idx_paper_pub_year", columnList = "publicationYear"),
+    @Index(name = "idx_paper_status", columnList = "status")
+})
 public class Paper {
 
     @Id
@@ -35,10 +39,14 @@ public class Paper {
     private Instant updatedAt;
 
     @Column(nullable = false)
-private String originalFileName;
+    private String originalFileName;
 
-@Column(nullable = false, unique = true)
-private String storedFileName;
+    @Column(nullable = false, unique = true)
+    private String storedFileName;
+
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
+    private String extractedText;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -137,7 +145,12 @@ public void setStoredFileName(String storedFileName) {
     this.storedFileName = storedFileName;
 }
 
+public String getExtractedText() {
+    return extractedText;
+}
 
-
+public void setExtractedText(String extractedText) {
+    this.extractedText = extractedText;
+}
 
 }

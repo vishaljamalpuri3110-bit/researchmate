@@ -10,8 +10,13 @@ public class PaperResponse {
     private String abstractText;
     private Integer publicationYear;
     private PaperStatus status;
+    private String originalFileName;
+    private boolean hasExtractedText;
     private Instant createdAt;
     private Instant updatedAt;
+
+    public PaperResponse() {
+    }
 
     public PaperResponse(
             Long id,
@@ -21,12 +26,26 @@ public class PaperResponse {
             PaperStatus status,
             Instant createdAt,
             Instant updatedAt) {
+        this(id, title, abstractText, publicationYear, status, null, false, createdAt, updatedAt);
+    }
 
+    public PaperResponse(
+            Long id,
+            String title,
+            String abstractText,
+            Integer publicationYear,
+            PaperStatus status,
+            String originalFileName,
+            boolean hasExtractedText,
+            Instant createdAt,
+            Instant updatedAt) {
         this.id = id;
         this.title = title;
         this.abstractText = abstractText;
         this.publicationYear = publicationYear;
         this.status = status;
+        this.originalFileName = originalFileName;
+        this.hasExtractedText = hasExtractedText;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -49,6 +68,14 @@ public class PaperResponse {
 
     public PaperStatus getStatus() {
         return status;
+    }
+
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
+
+    public boolean isHasExtractedText() {
+        return hasExtractedText;
     }
 
     public Instant getCreatedAt() {

@@ -3,6 +3,7 @@ package com.researchmate.entity;
 import java.time.Instant;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +12,9 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="users")
+@Table(name = "users", indexes = {
+    @Index(name = "idx_users_email", columnList = "email")
+})
 public class User {
 
     @Id

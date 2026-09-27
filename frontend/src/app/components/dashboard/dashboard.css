@@ -1,0 +1,359 @@
+
+.dashboard-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+/* Welcome */
+
+.welcome-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.welcome-section h1 {
+  margin: 0 0 8px;
+  color: #1f2937;
+  font-size: 32px;
+}
+
+.welcome-section p {
+  margin: 0;
+  max-width: 720px;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.stat-card {
+  cursor: pointer;
+}
+
+.recent-paper {
+  cursor: pointer;
+}
+
+.view-all {
+  cursor: pointer;
+}
+
+.action-card {
+  cursor: pointer;
+}
+
+.primary-button {
+  cursor: pointer;
+}
+
+
+/* Buttons */
+
+.primary-button {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #1d4ed8;
+}
+
+/* Error */
+
+.error-message {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+}
+
+/* Loading */
+
+.state-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 50px 24px;
+  text-align: center;
+}
+
+.state-card h3 {
+  margin-top: 16px;
+  color: #374151;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto;
+  border: 4px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Stats */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 38px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.stat-label {
+  display: block;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stat-card strong {
+  display: block;
+  margin: 8px 0 5px;
+  color: #111827;
+  font-size: 30px;
+}
+
+.stat-description {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* Sections */
+
+.section {
+  margin-top: 34px;
+}
+
+.section h2 {
+  margin: 0 0 6px;
+  color: #1f2937;
+  font-size: 22px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.view-all {
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Research Tools */
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.action-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.action-card:hover {
+  border-color: #bfdbfe;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.action-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.action-card h3 {
+  margin: 0 0 6px;
+  color: #1f2937;
+  font-size: 16px;
+}
+
+.action-card p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Recent Papers */
+
+.recent-list {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.recent-paper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 17px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.recent-paper:last-child {
+  border-bottom: none;
+}
+
+.paper-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.paper-info h3 {
+  margin: 0 0 4px;
+  color: #374151;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.paper-info span {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.status {
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status.analyzed {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status.extracted {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.status.failed {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.view-button {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.empty-card {
+  padding: 40px 24px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.empty-card h3 {
+  margin: 0 0 8px;
+  color: #374151;
+}
+
+.empty-card p {
+  margin: 0 0 18px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-page {
+    padding: 24px 16px 40px;
+  }
+
+  .welcome-section {
+    flex-direction: column;
+  }
+
+  .welcome-section h1 {
+    font-size: 27px;
+  }
+
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .recent-paper {
+    flex-wrap: wrap;
+  }
+
+  .paper-info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

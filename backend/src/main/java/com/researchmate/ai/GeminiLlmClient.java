@@ -55,6 +55,7 @@ public String complete(String systemPrompt, String userPrompt) {
             If information is unavailable, use an empty string or empty array.
             """.formatted(systemPrompt, userPrompt);
 
+            log.info("Gemini prompt size: {} characters", prompt.length());
     Map<String, Object> payload = Map.of(
             "contents", new Object[]{
                     Map.of(
@@ -73,7 +74,7 @@ public String complete(String systemPrompt, String userPrompt) {
         String requestBody = objectMapper.writeValueAsString(payload);
 
         String endpoint =
-                "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent";
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent";
 
         int maxAttempts = 3;
 
@@ -106,9 +107,9 @@ public String complete(String systemPrompt, String userPrompt) {
                 boolean retryable = status == 429 || status >= 500;
 
                 log.warn(
-                        "Gemini API returned HTTP {} on attempt {}/{}",
-                        status, attempt, maxAttempts
-                );
+    "Gemini API returned HTTP {} on attempt {}/{}: {}",
+    status, attempt, maxAttempts, response.body()
+);
 
                 if (!retryable || attempt == maxAttempts) {
                     throw new RuntimeException(
@@ -146,8 +147,7 @@ public String complete(String systemPrompt, String userPrompt) {
                 }
             }
 
-            long backoffMillis = 1000L * attempt;
-
+            long backoffMillis = (long) Math.pow(2, attempt - 1) * 2000L;
             log.info(
                     "Retrying Gemini request after {} ms",
                     backoffMillis

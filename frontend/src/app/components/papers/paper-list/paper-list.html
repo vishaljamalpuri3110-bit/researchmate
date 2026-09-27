@@ -1,0 +1,143 @@
+
+<div class="paper-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1>My Research Papers</h1>
+      <p>Upload, analyze, explore, and compare your academic papers.</p>
+    </div>
+
+    <a routerLink="/papers/upload" class="upload-button">
+      + Upload Paper
+    </a>
+  </div>
+
+  <!-- Comparison Controls -->
+  <div class="comparison-toolbar" *ngIf="papers.length > 0">
+
+    <div>
+      <strong>Select papers for comparison</strong>
+      <span>
+        {{ selectedPaperIds.length }} / 5 selected
+      </span>
+    </div>
+
+    <button
+      class="compare-button"
+      [disabled]="selectedPaperIds.length < 2"
+      (click)="compareSelected()">
+
+      Compare Selected
+    </button>
+
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMsg" class="error-message">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="state-card">
+    <div class="spinner"></div>
+    <h3>Loading papers...</h3>
+  </div>
+
+  <!-- Empty -->
+  <div
+    *ngIf="!loading && papers.length === 0"
+    class="state-card">
+
+    <h3>No papers yet</h3>
+    <p>Upload your first research paper to get started.</p>
+
+    <a routerLink="/papers/upload" class="upload-button">
+      Upload Paper
+    </a>
+
+  </div>
+
+  <!-- Papers -->
+  <div
+    *ngIf="!loading && papers.length > 0"
+    class="paper-grid">
+
+    <div
+      class="paper-card"
+      *ngFor="let paper of papers">
+
+      <!-- Card Header -->
+      <div class="paper-header">
+
+        <div class="paper-title-section">
+
+          <h2>{{ paper.title }}</h2>
+
+          <span
+            class="year"
+            *ngIf="paper.publicationYear">
+            {{ paper.publicationYear }}
+          </span>
+
+        </div>
+
+        <span
+          class="status"
+          [class.analyzed]="paper.status === 'ANALYZED'"
+          [class.extracted]="paper.status === 'EXTRACTED'"
+          [class.failed]="paper.status === 'FAILED'">
+
+          {{ paper.status }}
+
+        </span>
+
+      </div>
+
+      <!-- File -->
+      <div class="file-name" *ngIf="paper.fileName">
+        📄 {{ paper.fileName }}
+      </div>
+
+      <!-- Created -->
+      <div class="created-date" *ngIf="paper.createdAt">
+        Added {{ paper.createdAt | date:'mediumDate' }}
+      </div>
+
+      <!-- Actions -->
+      <div class="paper-actions">
+
+        <label class="select-paper">
+
+          <input
+            type="checkbox"
+            [checked]="isSelected(paper.id)"
+            (change)="toggleSelection(paper.id)">
+
+          Select for comparison
+
+        </label>
+
+        <div class="action-buttons">
+
+          <a
+            [routerLink]="['/papers', paper.id]"
+            class="view-button">
+            View
+          </a>
+
+          <button
+            class="delete-button"
+            (click)="deletePaper(paper.id)">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

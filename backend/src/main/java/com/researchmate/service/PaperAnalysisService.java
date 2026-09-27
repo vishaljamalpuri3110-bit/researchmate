@@ -103,7 +103,12 @@ if (chunks.size() > 1) {
                     You are an academic research analysis engine.
                     Analyze ONLY information strictly supported by the supplied paper text.
                     Never invent authors, datasets, algorithms, numerical results, or research problems.
-                    If any section is not explicitly present in the text, write: 'Information not explicitly specified in document'.
+                    For limitations and futureWork, extract only limitations or future work that are explicitly stated or clearly described in the supplied paper text.
+Do not infer or invent limitations or future work.
+If no limitation is supported by the text, return an empty array.
+If no future work is supported by the text, return an empty array.
+
+For other fields, if information is unavailable, return an empty string or empty array as appropriate.
                     You must output ONLY valid, parsable JSON matching this exact structure:
                     {
                       "title": "String",
@@ -124,6 +129,11 @@ if (chunks.size() > 1) {
             String userPrompt = "Analyze this academic text and return the structured JSON:\n\n" + textForAnalysis;
 
             String rawResponse = llmClient.complete(systemPrompt, userPrompt);
+            log.info(
+    "Gemini prompt size for paper ID {}: {} characters",
+    paperId,
+    userPrompt.length()
+);
             JsonNode rootNode = parseAndValidateJson(rawResponse);
 
             PaperAnalysis analysis = analysisRepository.findByPaperId(paper.getId())

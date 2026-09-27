@@ -106,4 +106,17 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(status).body(error);
     }
+
+    @ExceptionHandler(EmailServiceException.class)
+public ResponseEntity<ApiError> handleEmailService(
+        EmailServiceException ex,
+        HttpServletRequest request) {
+
+    return buildErrorResponse(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "EMAIL_SERVICE_ERROR",
+        "Unable to send password reset email. Please try again later.",
+        request
+    );
+}
 }

@@ -1,7 +1,6 @@
 package com.researchmate.dto.response;
 
 import java.util.List;
-import java.util.Map;
 
 public record ExperimentResultResponse(
         String researchQuestion,

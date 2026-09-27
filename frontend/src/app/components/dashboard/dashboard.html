@@ -1,0 +1,272 @@
+
+<div class="dashboard-page">
+
+  <!-- Welcome -->
+  <div class="welcome-section">
+    <div>
+      <h1>ResearchMate Dashboard</h1>
+      <p>
+        Manage your research papers, analyze academic content,
+        discover similar work, and identify potential research gaps.
+      </p>
+    </div>
+
+    <a
+      routerLink="/papers/upload"
+      class="primary-button">
+      + Upload Paper
+    </a>
+  </div>
+
+  <!-- Error -->
+  <div
+    *ngIf="errorMsg"
+    class="error-message">
+    {{ errorMsg }}
+  </div>
+
+  <!-- Loading -->
+  <div
+    *ngIf="loading"
+    class="state-card">
+
+    <div class="spinner"></div>
+
+    <h3>Loading dashboard...</h3>
+
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!loading">
+
+   <!-- Stats -->
+<div class="stats-grid">
+
+  <a
+    routerLink="/papers"
+    class="stat-card">
+
+    <span class="stat-label">Total Papers</span>
+
+    <strong>{{ totalPapers }}</strong>
+
+    <span class="stat-description">
+      Papers in your research library
+    </span>
+
+    <span class="stat-link">
+      View papers →
+    </span>
+
+  </a>
+
+  <a
+    routerLink="/papers"
+    class="stat-card">
+
+    <span class="stat-label">Analyzed</span>
+
+    <strong>{{ analyzedPapers }}</strong>
+
+    <span class="stat-description">
+      Papers with AI analysis
+    </span>
+
+    <span class="stat-link">
+      View analyzed →
+    </span>
+
+  </a>
+
+  <a
+    routerLink="/papers"
+    class="stat-card">
+
+    <span class="stat-label">Pending</span>
+
+    <strong>{{ pendingPapers }}</strong>
+
+    <span class="stat-description">
+      Papers awaiting analysis
+    </span>
+
+    <span class="stat-link">
+      View pending →
+    </span>
+
+  </a>
+
+  <a
+    routerLink="/papers"
+    class="stat-card">
+
+    <span class="stat-label">Failed</span>
+
+    <strong>{{ failedPapers }}</strong>
+
+    <span class="stat-description">
+      Papers requiring attention
+    </span>
+
+    <span class="stat-link">
+      View papers →
+    </span>
+
+  </a>
+
+</div>
+
+
+    <!-- Quick Actions -->
+    <section class="section">
+
+      <h2>Research Tools</h2>
+
+      <div class="action-grid">
+
+        <a
+          routerLink="/papers"
+          class="action-card">
+
+          <div class="action-icon">📚</div>
+
+          <div>
+            <h3>My Papers</h3>
+            <p>
+              View, analyze, search, and manage your research papers.
+            </p>
+          </div>
+
+        </a>
+
+        <a
+          routerLink="/papers/upload"
+          class="action-card">
+
+          <div class="action-icon">📄</div>
+
+          <div>
+            <h3>Upload Paper</h3>
+            <p>
+              Add a new academic paper to your research library.
+            </p>
+          </div>
+
+        </a>
+
+        <a
+          routerLink="/research-gaps"
+          class="action-card">
+
+          <div class="action-icon">🔎</div>
+
+          <div>
+            <h3>Research Gaps</h3>
+            <p>
+              Explore potential research directions from your papers.
+            </p>
+          </div>
+
+        </a>
+
+        <a
+          routerLink="/papers"
+          class="action-card">
+
+          <div class="action-icon">🔬</div>
+
+          <div>
+            <h3>Compare Papers</h3>
+            <p>
+              Select 2–5 analyzed papers and compare their research.
+            </p>
+          </div>
+
+        </a>
+
+      </div>
+
+    </section>
+
+    <section class="section">
+
+  <div class="section-header">
+
+    <div>
+      <h2>Recent Papers</h2>
+      <p>Your latest papers added to ResearchMate.</p>
+    </div>
+
+    <a
+      routerLink="/papers"
+      class="view-all">
+      View All →
+    </a>
+
+  </div>
+
+  <div
+    *ngIf="papers.length === 0"
+    class="empty-card">
+
+    <h3>No papers yet</h3>
+
+    <p>
+      Upload your first research paper to start using ResearchMate.
+    </p>
+
+    <a
+      routerLink="/papers/upload"
+      class="primary-button">
+      Upload Paper
+    </a>
+
+  </div>
+
+
+  <div
+    *ngIf="papers.length > 0"
+    class="recent-list">
+
+    <a
+      *ngFor="let paper of papers | slice:0:5"
+      [routerLink]="['/papers', paper.id]"
+      class="recent-paper">
+
+      <div class="paper-icon">
+        📄
+      </div>
+
+      <div class="paper-info">
+
+        <h3>{{ paper.title }}</h3>
+
+        <span *ngIf="paper.publicationYear">
+          {{ paper.publicationYear }}
+        </span>
+
+      </div>
+
+      <span
+        class="status"
+        [class.analyzed]="paper.status === 'ANALYZED'"
+        [class.extracted]="paper.status === 'EXTRACTED'"
+        [class.failed]="paper.status === 'FAILED'">
+
+        {{ paper.status }}
+
+      </span>
+
+      <span class="paper-arrow">
+        →
+      </span>
+
+    </a>
+
+  </div>
+
+</section>
+
+  </div>
+
+</div>

@@ -1,0 +1,169 @@
+
+<div class="upload-page">
+
+  <div class="page-header">
+
+    <div>
+      <span class="eyebrow">RESEARCH LIBRARY</span>
+
+      <h1>Upload Research Paper</h1>
+
+      <p>
+        Add a PDF to extract, analyze, compare, and discover
+        potential research directions.
+      </p>
+    </div>
+
+    <a
+      routerLink="/papers"
+      class="back-button">
+      ← Back to Papers
+    </a>
+
+  </div>
+
+
+  <div class="upload-card">
+
+    <div class="card-icon">
+      <i class="bi bi-file-earmark-pdf"></i>
+    </div>
+
+    <div class="card-heading">
+
+      <h2>Paper Information</h2>
+
+      <p>
+        Provide the basic details before uploading your paper.
+      </p>
+
+    </div>
+
+
+    <!-- Error -->
+
+    <div
+      *ngIf="errorMsg"
+      class="error-message">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      {{ errorMsg }}
+
+    </div>
+
+
+    <!-- Title -->
+
+    <div class="field-group">
+
+      <label for="title">
+        Paper Title
+      </label>
+
+      <input
+        id="title"
+        type="text"
+        [(ngModel)]="title"
+        placeholder="Enter research paper title">
+
+    </div>
+
+
+    <!-- Year -->
+
+    <div class="field-group">
+
+      <label for="publicationYear">
+        Publication Year
+      </label>
+
+      <input
+        id="publicationYear"
+        type="number"
+        [(ngModel)]="publicationYear"
+        placeholder="e.g. 2025"
+        min="1900"
+        [max]="2100">
+
+    </div>
+
+
+    <!-- File -->
+
+    <div class="field-group">
+
+      <label for="paperFile">
+        Research Paper PDF
+      </label>
+
+      <div class="file-input-wrapper">
+
+        <input
+          id="paperFile"
+          type="file"
+          accept=".pdf,application/pdf"
+          (change)="onFileSelected($event)">
+
+      </div>
+
+      <span class="field-hint">
+        Upload a PDF research paper supported by ResearchMate.
+      </span>
+
+    </div>
+
+
+    <!-- Selected File -->
+
+    <div
+      *ngIf="selectedFile"
+      class="selected-file">
+
+      <div class="file-icon">
+        <i class="bi bi-file-earmark-pdf"></i>
+      </div>
+
+      <div class="file-info">
+
+        <strong>
+          {{ selectedFile.name }}
+        </strong>
+
+        <span>
+          {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Upload -->
+
+    <button
+      class="upload-button"
+      [disabled]="uploading"
+      (click)="upload()">
+
+      <i
+        *ngIf="!uploading"
+        class="bi bi-cloud-arrow-up">
+      </i>
+
+      {{ uploading ? 'Uploading...' : 'Upload PDF' }}
+
+    </button>
+
+
+    <div class="security-note">
+
+      <i class="bi bi-shield-check"></i>
+
+      Your uploaded research paper is protected by authenticated access.
+
+    </div>
+
+  </div>
+
+</div>

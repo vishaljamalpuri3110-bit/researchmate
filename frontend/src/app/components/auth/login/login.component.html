@@ -1,0 +1,250 @@
+
+<div class="login-page">
+
+  <!-- Left Branding Panel -->
+  <section class="brand-panel">
+
+    <div class="brand-content">
+
+      <div class="brand-logo">
+        <div class="logo-icon">
+          <i class="bi bi-journal-text"></i>
+        </div>
+        <span>ResearchMate</span>
+      </div>
+
+      <div class="brand-message">
+
+        <span class="eyebrow">
+          AI-POWERED RESEARCH ASSISTANT
+        </span>
+
+        <h1>
+          Turn research papers<br>
+          into <span>insights.</span>
+        </h1>
+
+        <p>
+          Analyze papers, discover related research,
+          compare methodologies, and identify potential
+          research gaps — all in one place.
+        </p>
+
+      </div>
+
+      <div class="feature-list">
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+
+          <div>
+            <strong>Paper Analysis</strong>
+            <span>Extract meaningful research insights</span>
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            <i class="bi bi-diagram-3"></i>
+          </div>
+
+          <div>
+            <strong>Semantic Similarity</strong>
+            <span>Find related papers intelligently</span>
+          </div>
+
+        </div>
+
+        <div class="feature">
+
+          <div class="feature-icon">
+            <i class="bi bi-lightbulb"></i>
+          </div>
+
+          <div>
+            <strong>Research Gaps</strong>
+            <span>Discover patterns across literature</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="grid-pattern"></div>
+
+  </section>
+
+
+  <!-- Login Panel -->
+  <section class="login-panel">
+
+    <div class="login-card">
+
+      <div class="mobile-logo">
+
+        <div class="logo-icon">
+          <i class="bi bi-journal-text"></i>
+        </div>
+
+        <span>ResearchMate</span>
+
+      </div>
+
+
+      <div class="login-heading">
+
+        <span class="welcome">
+          WELCOME BACK
+        </span>
+
+        <h2>
+          Sign in to ResearchMate
+        </h2>
+
+        <p>
+          Continue your research journey.
+        </p>
+
+      </div>
+
+
+      <div *ngIf="errorMsg" class="error-alert">
+  <i class="bi bi-exclamation-circle"></i>
+  <span>{{ errorMsg }}</span>
+</div>
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()">
+
+
+        <!-- Email -->
+
+        <div class="field-group">
+
+          <label for="email">
+            Email address
+          </label>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-envelope"></i>
+
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              [class.invalid]="
+                loginForm.get('email')?.invalid &&
+                loginForm.get('email')?.touched
+              ">
+
+          </div>
+
+          <small
+            *ngIf="
+              loginForm.get('email')?.invalid &&
+              loginForm.get('email')?.touched
+            ">
+
+            Please enter a valid email address.
+
+          </small>
+
+        </div>
+
+
+        <!-- Password -->
+
+        <div class="field-group">
+
+          <div class="label-row">
+
+            <label for="password">
+              Password
+            </label>
+            <a routerLink="/forgot-password" class="forgot-link">
+  Forgot password?
+</a>
+
+          </div>
+
+          <div class="input-wrapper">
+
+            <i class="bi bi-lock"></i>
+
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              [class.invalid]="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              ">
+
+          </div>
+
+          <small
+            *ngIf="
+              loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched
+            ">
+
+            Password is required.
+
+          </small>
+
+        </div>
+
+
+        <!-- Login -->
+
+        <button
+          type="submit"
+          class="login-button"
+          [disabled]="loading">
+
+          <span *ngIf="!loading">
+            Sign in
+            <i class="bi bi-arrow-right"></i>
+          </span>
+
+          <span *ngIf="loading">
+            Signing in...
+          </span>
+
+        </button>
+
+      </form>
+
+      <div class="register-link">
+        <span>Don't have an account?</span>
+        <a routerLink="/register">Create an account</a>
+      </div>
+
+      <div class="security-note">
+
+        <i class="bi bi-shield-check"></i>
+
+        Your research data is securely protected.
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>

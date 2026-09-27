@@ -1,0 +1,441 @@
+
+<div class="paper-details-page">
+
+  <!-- Loading -->
+
+  <div
+    *ngIf="loading"
+    class="state-card">
+
+    <div class="spinner"></div>
+
+    <h3>Loading paper...</h3>
+
+  </div>
+
+
+  <!-- Error -->
+
+  <div
+    *ngIf="!loading && errorMsg"
+    class="error-message">
+
+    <i class="bi bi-exclamation-circle"></i>
+
+    {{ errorMsg }}
+
+  </div>
+
+
+  <!-- Paper -->
+
+  <div
+    *ngIf="!loading && paper">
+
+
+    <!-- Header -->
+
+    <div class="paper-page-header">
+
+      <div class="header-main">
+
+        <span class="status-badge">
+          {{ paper.status }}
+        </span>
+
+        <h1>
+          {{ paper.title }}
+        </h1>
+
+        <div class="file-meta">
+
+          <span>
+            <i class="bi bi-file-earmark-pdf"></i>
+            {{ paper.originalFileName }}
+          </span>
+
+          <span *ngIf="paper.publicationYear">
+            <i class="bi bi-calendar3"></i>
+            {{ paper.publicationYear }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="analyze-button"
+        (click)="analyzePaper()"
+        [disabled]="analyzing">
+
+        <i
+          *ngIf="!analyzing"
+          class="bi bi-stars">
+        </i>
+
+        <span
+          *ngIf="analyzing"
+          class="small-spinner">
+        </span>
+
+        {{ analyzing ? 'Analyzing...' : 'Analyze Paper' }}
+
+      </button>
+
+    </div>
+
+
+    <!-- Paper Information -->
+
+    <div class="details-card">
+
+      <div class="card-heading">
+
+        <i class="bi bi-info-circle"></i>
+
+        <h2>Paper Information</h2>
+
+      </div>
+
+      <div class="info-grid">
+
+        <div class="info-item">
+
+          <span>Status</span>
+
+          <strong>
+            {{ paper.status }}
+          </strong>
+
+        </div>
+
+        <div class="info-item">
+
+          <span>Publication Year</span>
+
+          <strong>
+            {{ paper.publicationYear || 'Not specified' }}
+          </strong>
+
+        </div>
+
+        <div class="info-item">
+
+          <span>Text Extraction</span>
+
+          <strong>
+            {{ paper.hasExtractedText ? 'Available' : 'Not Available' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Abstract -->
+
+    <div
+      *ngIf="paper.abstractText"
+      class="details-card">
+
+      <div class="card-heading">
+
+        <i class="bi bi-file-text"></i>
+
+        <h2>Extracted Abstract</h2>
+
+      </div>
+
+      <p class="content-text">
+        {{ paper.abstractText }}
+      </p>
+
+    </div>
+
+
+    <!-- AI Analysis -->
+
+    <div class="details-card">
+
+      <div class="card-heading">
+
+        <i class="bi bi-stars"></i>
+
+        <h2>AI Analysis</h2>
+
+      </div>
+
+
+      <!-- Loading Analysis -->
+
+      <div
+        *ngIf="loadingAnalysis"
+        class="inline-loading">
+
+        <div class="small-spinner"></div>
+
+        <span>Loading analysis...</span>
+
+      </div>
+
+
+      <!-- No Analysis -->
+
+      <div
+        *ngIf="!loadingAnalysis && !analysis"
+        class="empty-analysis">
+
+        <i class="bi bi-stars"></i>
+
+        <h3>This paper has not been analyzed yet.</h3>
+
+        <p>
+          Run AI analysis to extract the research problem,
+          methodology, algorithms, results, limitations, and future work.
+        </p>
+
+        <button
+          class="secondary-button"
+          (click)="analyzePaper()"
+          [disabled]="analyzing">
+
+          {{ analyzing ? 'Analyzing...' : 'Analyze Paper' }}
+
+        </button>
+
+      </div>
+
+
+      <!-- Analysis Result -->
+
+      <div
+        *ngIf="!loadingAnalysis && analysis"
+        class="analysis-content">
+
+
+        <div class="analysis-section full-width">
+
+          <h3>Summary</h3>
+
+          <p>
+            {{ analysis.summary }}
+          </p>
+
+        </div>
+
+
+        <div class="analysis-section full-width">
+
+          <h3>Research Problem</h3>
+
+          <p>
+            {{ analysis.researchProblem }}
+          </p>
+
+        </div>
+
+
+        <div class="analysis-section full-width">
+
+          <h3>Methodology</h3>
+
+          <p>
+            {{ analysis.methodology }}
+          </p>
+
+        </div>
+
+
+        <div class="analysis-grid">
+
+          <div class="analysis-section">
+
+            <h3>Dataset</h3>
+
+            <p>
+              {{ analysis.dataset }}
+            </p>
+
+          </div>
+
+
+          <div class="analysis-section">
+
+            <h3>Algorithms</h3>
+
+            <p>
+              {{ analysis.algorithms }}
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="analysis-section full-width">
+
+          <h3>Results</h3>
+
+          <p>
+            {{ analysis.results }}
+          </p>
+
+        </div>
+
+
+        
+<div class="analysis-grid">
+
+  <div class="analysis-section">
+
+    <h3>Limitations</h3>
+
+    <ul
+      *ngIf="analysis.limitations && analysis.limitations.length > 0"
+      class="analysis-list">
+
+      <li *ngFor="let limitation of analysis.limitations">
+        {{ limitation }}
+      </li>
+
+    </ul>
+
+    <p
+      *ngIf="!analysis.limitations || analysis.limitations.length === 0"
+      class="not-stated">
+
+      Not explicitly stated in the paper.
+
+    </p>
+
+  </div>
+
+
+  <div class="analysis-section">
+
+    <h3>Future Work</h3>
+
+    <ul
+      *ngIf="analysis.futureWork && analysis.futureWork.length > 0"
+      class="analysis-list">
+
+      <li *ngFor="let future of analysis.futureWork">
+        {{ future }}
+      </li>
+
+    </ul>
+
+    <p
+      *ngIf="!analysis.futureWork || analysis.futureWork.length === 0"
+      class="not-stated">
+
+      Not explicitly stated in the paper.
+
+    </p>
+
+  </div>
+
+</div>
+
+
+
+      </div>
+
+    </div>
+
+
+    <!-- Similar Papers -->
+
+    <div class="details-card">
+
+      <div class="card-heading">
+
+        <i class="bi bi-diagram-3"></i>
+
+        <h2>Similar Papers</h2>
+
+      </div>
+
+
+      <div class="similar-buttons">
+
+        <button
+          class="similar-button"
+          (click)="loadSimilar('TF_IDF')">
+
+          <i class="bi bi-search"></i>
+
+          TF-IDF Similarity
+
+        </button>
+
+        <button
+          class="similar-button semantic"
+          (click)="loadSimilar('EMBEDDING')">
+
+          <i class="bi bi-diagram-3"></i>
+
+          Semantic Similarity
+
+        </button>
+
+      </div>
+
+
+      <div
+        *ngIf="loadingSimilar"
+        class="inline-loading">
+
+        <div class="small-spinner"></div>
+
+        <span>Finding similar papers...</span>
+
+      </div>
+
+
+      <div
+        *ngIf="!loadingSimilar && similarPapers.length > 0"
+        class="similar-list">
+
+        <div
+          *ngFor="let similar of similarPapers"
+          class="similar-item">
+
+          <div class="similar-info">
+
+            <h3>
+              {{ similar.title }}
+            </h3>
+
+            <span>
+              {{ similar.publicationYear }}
+            </span>
+
+          </div>
+
+          <span class="similar-score">
+  {{ formatSimilarityScore(similar.score) }}
+</span>
+
+        </div>
+
+      </div>
+
+
+      <div
+        *ngIf="!loadingSimilar && similarPapers.length === 0"
+        class="empty-similar">
+
+        Select a similarity method to find related papers.
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

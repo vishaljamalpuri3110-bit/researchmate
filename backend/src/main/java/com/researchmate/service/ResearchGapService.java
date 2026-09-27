@@ -395,36 +395,59 @@ public class ResearchGapService {
     }
 
     private String synthesizeGapDescription(
-            List<EvidenceCandidate> cluster,
-            int paperCount) {
+List<EvidenceCandidate> cluster,
+int paperCount) {
 
-        StringBuilder sb =
-                new StringBuilder();
 
-        sb.append(
-                "A recurring theme across "
-        ).append(paperCount)
-                .append(" papers highlights: ");
+StringBuilder sb =
+        new StringBuilder();
 
-        sb.append(cluster.get(0).text)
-                .append(". ");
+if (paperCount == 1) {
 
-        if (cluster.size() > 1) {
+    sb.append(
+            "A limitation identified in one analyzed paper highlights: "
+    );
 
-            sb.append(
-                    "Additionally, supporting investigations indicate: "
-            ).append(cluster.get(1).text)
-                    .append(". ");
-        }
+} else {
 
-        sb.append(
-                "Bridging this area offers an opportunity "
-                        + "to address demonstrated computational "
-                        + "or empirical bottlenecks."
-        );
+    sb.append(
+            "A recurring theme across "
+    ).append(paperCount)
+            .append(" analyzed papers highlights: ");
+}
 
-        return sb.toString();
-    }
+sb.append(cluster.get(0).text)
+        .append(". ");
+
+if (cluster.size() > 1) {
+
+    sb.append(
+            "Additionally, supporting investigations indicate: "
+    ).append(cluster.get(1).text)
+            .append(". ");
+}
+
+if (paperCount == 1) {
+
+    sb.append(
+            "This may represent a potential research direction, "
+            + "but additional literature is required to determine "
+            + "whether the issue is recurring."
+    );
+
+} else {
+
+    sb.append(
+            "The repeated evidence suggests a potential research "
+            + "direction that warrants further investigation."
+    );
+}
+
+return sb.toString();
+
+
+}
+
 
     /**
      * Rejects placeholder or missing evidence generated when

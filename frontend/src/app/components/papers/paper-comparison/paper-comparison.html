@@ -1,0 +1,188 @@
+
+<div class="comparison-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1>Paper Comparison</h1>
+      <p>Compare the research approach, methodology, datasets, and findings.</p>
+    </div>
+
+    <a routerLink="/papers" class="back-button">
+      ← Back to Papers
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="state-card">
+    <div class="spinner"></div>
+    <h3>Preparing comparison...</h3>
+    <p>Please wait while the selected papers are compared.</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && errorMsg" class="error-card">
+    <strong>Comparison failed</strong>
+    <p>{{ errorMsg }}</p>
+
+    <a routerLink="/papers" class="back-link">
+      Go back to papers
+    </a>
+  </div>
+
+  <!-- Comparison -->
+  <div
+    *ngIf="!loading && comparison"
+    class="comparison-content">
+
+    <!-- Overview -->
+    <div class="overview-card">
+      <div>
+        <span class="label">PAPERS COMPARED</span>
+        <h2>{{ comparison.papers.length }} Papers</h2>
+      </div>
+
+      <div>
+        <span class="label">GENERATED</span>
+        <p class="generated-date">
+          {{ comparison.generatedAt | date:'medium' }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Paper cards -->
+    <section class="section">
+
+      <div class="section-heading">
+        <h2>Research Comparison</h2>
+        <p>Key details extracted from each paper's analysis.</p>
+      </div>
+
+      <div class="paper-grid">
+
+        <div
+          class="paper-card"
+          *ngFor="let paper of comparison.papers">
+
+          <div class="paper-card-header">
+            <div>
+              <h3>{{ paper.title }}</h3>
+
+              <span class="year" *ngIf="paper.publicationYear">
+                {{ paper.publicationYear }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Research Problem -->
+          <div class="detail-section">
+            <h4>Research Problem</h4>
+            <p>
+              {{ paper.researchProblem || 'Information not explicitly specified in document.' }}
+            </p>
+          </div>
+
+          <!-- Methodology -->
+          <div class="detail-section">
+            <h4>Methodology</h4>
+            <p>
+              {{ paper.methodology || 'Information not explicitly specified in document.' }}
+            </p>
+          </div>
+
+          <!-- Dataset -->
+          <div class="detail-section">
+            <h4>Dataset</h4>
+            <p>
+              {{ paper.dataset || 'Information not explicitly specified in document.' }}
+            </p>
+          </div>
+
+          <!-- Algorithms -->
+          <div class="detail-section">
+            <h4>Algorithms / Techniques</h4>
+
+            <div
+              class="tag-list"
+              *ngIf="paper.algorithms?.length; else noAlgorithms">
+
+              <span
+                class="tag"
+                *ngFor="let algorithm of paper.algorithms">
+                {{ algorithm }}
+              </span>
+
+            </div>
+
+            <ng-template #noAlgorithms>
+              <p>Information not explicitly specified in document.</p>
+            </ng-template>
+          </div>
+
+          <!-- Results -->
+          <div class="detail-section">
+            <h4>Results</h4>
+            <p>
+              {{ paper.results || 'Information not explicitly specified in document.' }}
+            </p>
+          </div>
+
+          <!-- Limitations -->
+          <div class="detail-section">
+            <h4>Limitations</h4>
+
+            <ul
+              *ngIf="paper.limitations && paper.limitations.length > 0; else noLimitations">
+
+              <li *ngFor="let limitation of paper.limitations">
+                {{ limitation }}
+              </li>
+
+            </ul>
+
+            <ng-template #noLimitations>
+              <p>Information not explicitly specified in document.</p>
+            </ng-template>
+          </div>
+
+          <!-- Future Work -->
+          <div class="detail-section">
+            <h4>Future Work</h4>
+
+            <ul
+              *ngIf="paper.futureWork && paper.futureWork.length > 0; else noFutureWork">
+
+              <li *ngFor="let future of paper.futureWork">
+                {{ future }}
+              </li>
+
+            </ul>
+
+            <ng-template #noFutureWork>
+              <p>Information not explicitly specified in document.</p>
+            </ng-template>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Comparative Synthesis -->
+    <section class="synthesis-card">
+
+      <div class="section-heading">
+        <h2>Comparative Synthesis</h2>
+        <p>Overall observations from the selected papers.</p>
+      </div>
+
+      <div class="synthesis-content">
+        {{ comparison.comparativeSynthesis }}
+      </div>
+
+    </section>
+
+  </div>
+
+</div>

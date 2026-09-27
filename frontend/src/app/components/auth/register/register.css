@@ -1,0 +1,298 @@
+
+.register-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  background: #f8fafc;
+}
+
+.register-brand {
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  background: #0f172a;
+  color: white;
+}
+
+.brand-content {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #2563eb;
+  font-size: 22px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #60a5fa;
+  margin-bottom: 12px;
+}
+
+.brand-content h1 {
+  font-size: 42px;
+  line-height: 1.15;
+  margin: 0 0 20px;
+  letter-spacing: -1px;
+}
+
+.brand-content p {
+  color: #cbd5e1;
+  line-height: 1.7;
+  font-size: 16px;
+  margin-bottom: 36px;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #e2e8f0;
+}
+
+.feature-item i {
+  color: #60a5fa;
+  font-size: 19px;
+}
+
+.register-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 460px;
+  background: white;
+  padding: 42px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.08);
+}
+
+.mobile-logo {
+  display: none;
+}
+
+.form-header {
+  margin-bottom: 28px;
+}
+
+.form-header h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: #0f172a;
+}
+
+.form-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.input-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 14px 0 42px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  outline: none;
+  font-size: 14px;
+  color: #0f172a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-wrapper input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.field-error {
+  display: block;
+  margin-top: 6px;
+  color: #dc2626;
+  font-size: 12px;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 14px;
+  border-radius: 9px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.error-alert {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.success-alert {
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.register-button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.register-button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.register-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.loading-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 24px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.security-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  margin-top: 24px;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.security-note i {
+  color: #22c55e;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 900px) {
+
+  .register-page {
+    grid-template-columns: 1fr;
+  }
+
+  .register-brand {
+    display: none;
+  }
+
+  .register-content {
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  .mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .mobile-logo .brand-logo {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .register-content {
+    padding: 16px;
+  }
+
+  .register-card {
+    padding: 28px 22px;
+  }
+
+  .form-header h2 {
+    font-size: 26px;
+  }
+}

@@ -1,11 +1,15 @@
-package com.researchmate.ai;
 
+package com.researchmate.ai;
 import ai.djl.huggingface.tokenizers.HuggingFaceTokenizer;
 import ai.onnxruntime.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.nio.LongBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
 @Service
@@ -25,8 +29,25 @@ public class HybridEmbeddingService implements EmbeddingService {
                     new ClassPathResource(
                             "models/all-MiniLM-L6-v2/model.onnx");
 
+            Path modelPath =
+                    Files.createTempFile(
+                            "all-MiniLM-L6-v2-",
+                            ".onnx");
+
+            try (InputStream inputStream =
+                         modelResource.getInputStream()) {
+
+                Files.copy(
+                        inputStream,
+                        modelPath,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+            }
+
+            modelPath.toFile().deleteOnExit();
+
             session = environment.createSession(
-                    modelResource.getFile().getAbsolutePath(),
+                    modelPath.toString(),
                     new OrtSession.SessionOptions()
             );
 
@@ -34,8 +55,25 @@ public class HybridEmbeddingService implements EmbeddingService {
                     new ClassPathResource(
                             "models/all-MiniLM-L6-v2/tokenizer.json");
 
+            Path tokenizerPath =
+                    Files.createTempFile(
+                            "tokenizer-",
+                            ".json");
+
+            try (InputStream inputStream =
+                         tokenizerResource.getInputStream()) {
+
+                Files.copy(
+                        inputStream,
+                        tokenizerPath,
+                        StandardCopyOption.REPLACE_EXISTING
+                );
+            }
+
+            tokenizerPath.toFile().deleteOnExit();
+
             tokenizer = HuggingFaceTokenizer.newInstance(
-                    tokenizerResource.getFile().toPath()
+                    tokenizerPath
             );
 
         } catch (Exception e) {

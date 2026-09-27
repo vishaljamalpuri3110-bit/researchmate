@@ -1,0 +1,140 @@
+1. Checked Docker setup
+Enabled/verified virtualization.
+Installed/configured WSL 2.
+Got Docker Desktop working.
+Tested Docker with hello-world ✅
+📁 2. Prepared the project
+
+Your repo structure:
+
+researchmate/
+├── backend/
+├── frontend/
+├── .env
+└── docker-compose.yml
+🐳 3. Created backend Dockerfile
+
+backend/Dockerfile
+
+It:
+
+Uses Java 17
+Copies the backend
+Builds the Spring Boot JAR with Maven
+Runs the JAR
+Exposes port 8080
+Docker
+   ↓
+Java 17
+   ↓
+Spring Boot
+   ↓
+backend-0.0.1-SNAPSHOT.jar
+🗄️ 4. Created Docker Compose
+
+docker-compose.yml gives us two containers:
+
+┌─────────────────────────┐
+│ researchmate-backend    │
+│ Spring Boot :8080       │
+└────────────┬────────────┘
+             │
+       Docker network
+             │
+┌────────────▼────────────┐
+│ researchmate-mysql      │
+│ MySQL :3306             │
+└─────────────────────────┘
+
+Backend connects to:
+
+jdbc:mysql://mysql:3306/researchmate
+
+not localhost.
+
+💾 5. Added MySQL persistence
+
+Compose created:
+
+mysql_data:/var/lib/mysql
+
+So the database survives container restarts.
+
+📂 6. Added PDF upload volume
+
+We mapped:
+
+./backend/uploads
+        ↓
+/app/uploads
+
+So uploaded papers aren't trapped inside a disposable container.
+
+🤖 7. Included your MiniLM model
+
+Your model is already here:
+
+backend/src/main/resources/models/all-MiniLM-L6-v2/
+├── model.onnx
+├── tokenizer.json
+├── config.json
+├── tokenizer_config.json
+└── vocab.txt
+
+Because the Dockerfile does:
+
+COPY . .
+
+the model gets packaged into the backend JAR/image.
+
+🔐 8. Added environment variables
+
+We created .env for things like:
+
+JWT_SECRET
+LLM_API_KEY
+MAIL_USERNAME
+MAIL_PASSWORD
+
+So secrets don't need to be hardcoded into the Docker image.
+
+🚀 9. Built and started everything
+
+We ran:
+
+docker compose up --build
+
+Docker successfully started downloading/building the images.
+
+MySQL started successfully:
+
+mysqld: ready for connections
+❌ 10. Found the MiniLM container issue
+
+Backend reached Spring Boot startup but failed at:
+
+HybridEmbeddingService
+
+The exact reason:
+
+model.onnx ... does not reside in the file system
+
+Because your code used:
+
+modelResource.getFile()
+
+That works when running from the filesystem but not when the resource is inside a Spring Boot JAR.
+
+🔧 11. We're fixing that now
+
+We're changing the MiniLM loading process to:
+
+JAR resource
+    ↓
+InputStream
+    ↓
+temporary file inside container
+    ↓
+ONNX Runtime
+
+So the model remains local and bundled; we're just making its loading Docker-compatible.
